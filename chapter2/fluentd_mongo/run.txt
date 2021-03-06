@@ -1,0 +1,19 @@
+[mongo]
+docker run --name mongoDB -d -p 27017:27017 mongo
+
+[fluentd]
+docker run -d --name fluentd -p 24224:24224 -v E:\study\workspace\start-docker-kubernetes\chapter2\fluentd_mongo\fluent.conf:/fluentd/etc/fluent.conf -e FLUENTD_CONF=fluent.conf alicek106/fluentd:mongo
+
+[nginx]
+docker run -p 80:80 -d --log-driver=fluentd --log-opt fluentd-address=172.17.0.3:24224 --log-opt tag=docker.nginx.webserver nginx
+
+
+[mongo]
+docker exec -it mongoDB mongo
+
+show databases
+show dbs
+
+use nginx
+show collections
+db['access'].find()
